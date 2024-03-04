@@ -29,7 +29,13 @@ namespace fruit_market_api.Controllers
             var user = new User()
             {
                 FirstName = req.FirstName,
-                LastName = req.LastName
+                LastName = req.LastName,
+                Birthday = req.Birthday,
+                Email = req.Email,
+                Gender = req.Gender,
+                PhoneNumber = req.PhoneNumber,
+                Password = req.Password,
+                ImageProfile = req.ImageProfile
             };
 
             await _context.AddAsync(user);
@@ -53,9 +59,14 @@ namespace fruit_market_api.Controllers
             {
                 return NotFound();
             }
-            ntt.FirstName =req.FirstName ;
+            ntt.FirstName = req.FirstName;
             ntt.LastName = req.LastName;
-   
+            ntt.Birthday = req.Birthday;
+            ntt.Email = req.Email;
+            ntt.Gender = req.Gender;
+            ntt.PhoneNumber = req.PhoneNumber;
+            ntt.Password = req.Password;
+            ntt.ImageProfile = req.ImageProfile;
             await _context.SaveChangesAsync();
             return Ok(ntt);
         }

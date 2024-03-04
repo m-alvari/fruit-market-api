@@ -1,2 +1,4 @@
 bin
 obj
+Db/shop.db-shm
+Db/shop.db-wal

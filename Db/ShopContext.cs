@@ -32,6 +32,28 @@ namespace ConsoleApp.PostgreSQL
                 entity.Property(x => x.LastName)
                    .HasMaxLength(150)
                    .IsRequired();
+
+                entity.Property(x => x.Birthday)
+                      .IsRequired();
+
+                entity.Property(x => x.Email)
+                     .HasMaxLength(150)
+                    .IsRequired();
+
+                entity.Property(x => x.Gender)
+                  .IsRequired();
+
+                entity.Property(x => x.PhoneNumber)
+                      .HasMaxLength(150)
+                      .IsRequired();
+
+                entity.Property(x => x.Password)
+                     .HasMaxLength(150)
+                       .IsRequired();
+
+                entity.Property(x => x.ImageProfile)
+                        .HasColumnType("TEXT")
+                        .IsRequired();
             });
 
 
@@ -48,6 +70,7 @@ namespace ConsoleApp.PostgreSQL
                 entity.Property(x => x.Name)
                     .HasMaxLength(150)
                     .IsRequired();
+                    
             });
 
             base.OnModelCreating(modelBuilder);
