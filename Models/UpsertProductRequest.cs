@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace fruit_market_api.Models
 {
-    public record Product
+    public record UpsertProductRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public float Price {get; set;}
-        public string ImageUrl {get;set;}
+        public float Price { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

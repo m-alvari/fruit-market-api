@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ConsoleApp.PostgreSQL;
 using ConsoleApp.PostgreSQL.Models;
+using fruit_market_api.Db;
 using fruit_market_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +70,20 @@ namespace fruit_market_api.Controllers
             ntt.ImageProfile = req.ImageProfile;
             await _context.SaveChangesAsync();
             return Ok(ntt);
+        }
+
+        [HttpDelete("{id:int}")]
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

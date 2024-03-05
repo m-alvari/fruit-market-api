@@ -2,7 +2,7 @@ using ConsoleApp.PostgreSQL.Models;
 using fruit_market_api.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConsoleApp.PostgreSQL
+namespace fruit_market_api.Db
 {
     public class ShopContext : DbContext
     {

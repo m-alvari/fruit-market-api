@@ -9,7 +9,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
-
+  builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowSpecificOrigin",
+            builder =>
+            {
+                builder.WithOrigins("http://localhost:4200") // Replace with your Angular app's origin
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+    });
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 
@@ -25,7 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowSpecificOrigin");
 app.MapControllers();
 
 app.Run();
