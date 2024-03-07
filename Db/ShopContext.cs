@@ -12,6 +12,7 @@ namespace fruit_market_api.Db
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -70,8 +71,10 @@ namespace fruit_market_api.Db
                 entity.Property(x => x.Name)
                     .HasMaxLength(150)
                     .IsRequired();
-                    
+
             });
+
+
 
             base.OnModelCreating(modelBuilder);
         }

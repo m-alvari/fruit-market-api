@@ -48,5 +48,36 @@ namespace fruit_market_api.Controllers
             }
             return Ok(product);
         }
+
+        [HttpDelete("{id:int}")]
+
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("{id:int}")]
+
+        public async Task<ActionResult<Product>> UpdateProduct(int id, UpsertProductRequest req){
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if(product == null){
+            return NotFound();
+            }
+            product.Name = req.Name;
+            product.Price = req.Price;
+            product.ImageUrl = product.ImageUrl;
+
+            await _context.SaveChangesAsync();
+            return Ok(product);
+
+        }
+
     }
 }

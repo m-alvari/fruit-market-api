@@ -1,4 +1,5 @@
 using ConsoleApp.PostgreSQL;
+using fruit_market_api.Db;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

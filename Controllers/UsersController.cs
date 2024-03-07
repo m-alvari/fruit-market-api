@@ -55,21 +55,21 @@ namespace fruit_market_api.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult<User>> UpdateUser(int id, UpsertUserRequest req)
         {
-            var ntt = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if (ntt == null)
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (user == null)
             {
                 return NotFound();
             }
-            ntt.FirstName = req.FirstName;
-            ntt.LastName = req.LastName;
-            ntt.Birthday = req.Birthday;
-            ntt.Email = req.Email;
-            ntt.Gender = req.Gender;
-            ntt.PhoneNumber = req.PhoneNumber;
-            ntt.Password = req.Password;
-            ntt.ImageProfile = req.ImageProfile;
+            user.FirstName = req.FirstName;
+            user.LastName = req.LastName;
+            user.Birthday = req.Birthday;
+            user.Email = req.Email;
+            user.Gender = req.Gender;
+            user.PhoneNumber = req.PhoneNumber;
+            user.Password = req.Password;
+            user.ImageProfile = req.ImageProfile;
             await _context.SaveChangesAsync();
-            return Ok(ntt);
+            return Ok(user);
         }
 
         [HttpDelete("{id:int}")]
