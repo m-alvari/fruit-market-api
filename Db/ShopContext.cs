@@ -12,6 +12,7 @@ namespace fruit_market_api.Db
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<UserRefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +75,20 @@ namespace fruit_market_api.Db
 
             });
 
+            modelBuilder.Entity<UserRefreshToken>(entity =>
+            {
+                entity.ToTable("userRefreshToken");
+
+                entity.HasKey(x => x.UserId);
+
+                entity.Property(x => x.RefreshToken)
+                            .IsRequired()
+                            .ValueGeneratedOnAdd();
+
+                entity.Property(x => x.IsActive)
+                   .IsRequired()
+                   .ValueGeneratedOnAdd();
+            });
 
 
             base.OnModelCreating(modelBuilder);

@@ -25,7 +25,7 @@ namespace fruit_market_api.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<string>> LoginAccount(UpsertAccountRequest req)
+        public async Task<ActionResult<LoginTokenResponse>> LoginAccount(LoginAccountRequest req)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.PhoneNumber == req.UserName);
 
@@ -38,13 +38,13 @@ namespace fruit_market_api.Controllers
             {
                 return ValidationProblem("password is not correct");
             }
-
-            return Ok(user.PhoneNumber);
+            var auth = new Auth().GenerateToken(user.Id, user.PhoneNumber, user.Email, user.FirstName, user.LastName);
+            return new LoginTokenResponse { Token = auth };
         }
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult<User>> RegisterUser(UpsertUserRequest req)
+        public async Task<ActionResult<string>> RegisterUser(UpsertUserRequest req)
         {
             var exitUser = await _context.Users.FirstOrDefaultAsync(x => x.PhoneNumber == req.PhoneNumber);
             if (exitUser != null)
@@ -60,14 +60,15 @@ namespace fruit_market_api.Controllers
                 Gender = req.Gender,
                 PhoneNumber = req.PhoneNumber,
                 Password = UserExtensions.GetHash(req.Password),
-                ImageProfile = req.ImageProfile
+                ImageProfile = req.ImageProfile,
+                
             };
 
             await _context.AddAsync(user);
 
             await _context.SaveChangesAsync();
             user.Password = "";
-            return user;
+            return new Auth().GenerateToken(user.Id, user.PhoneNumber, user.Email, user.FirstName, user.LastName);
         }
     }
 }
