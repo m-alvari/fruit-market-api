@@ -1,4 +1,4 @@
-using ConsoleApp.PostgreSQL.Models;
+
 using fruit_market_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -79,15 +79,20 @@ namespace fruit_market_api.Db
             {
                 entity.ToTable("userRefreshToken");
 
-                entity.HasKey(x => x.UserId);
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.UserId)
+                    .IsRequired();
+
+                entity.Property(x => x.Id)
+                     .IsRequired()
+                     .ValueGeneratedOnAdd();
 
                 entity.Property(x => x.RefreshToken)
-                            .IsRequired()
-                            .ValueGeneratedOnAdd();
+                   .IsRequired();
 
                 entity.Property(x => x.IsActive)
-                   .IsRequired()
-                   .ValueGeneratedOnAdd();
+                    .IsRequired();
             });
 
 

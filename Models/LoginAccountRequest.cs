@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace fruit_market_api.Models
-{
+namespace fruit_market_api.Models;
+
     public record LoginAccountRequest
     {
         public string UserName { get; set; }
@@ -13,6 +13,6 @@ namespace fruit_market_api.Models
     }
 
     public record LoginTokenResponse {
-        public string Token { get; set; }
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
     }
-}

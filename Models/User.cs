@@ -1,4 +1,5 @@
-namespace ConsoleApp.PostgreSQL.Models;
+namespace fruit_market_api.Models;
+
 
 
 public record User

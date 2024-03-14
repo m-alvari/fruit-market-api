@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ConsoleApp.PostgreSQL.Models;
 
-namespace fruit_market_api.Models
-{
+namespace fruit_market_api.Models;
+
     public record UpsertUserRequest
     {
         public string FirstName { get; set; }
@@ -17,4 +16,3 @@ namespace fruit_market_api.Models
         public string Password { get; set; }
         public string ImageProfile { get; set; }
     }
-}

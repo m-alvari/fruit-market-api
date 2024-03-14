@@ -88,20 +88,21 @@ namespace fruit_market_api.Migrations
 
             modelBuilder.Entity("fruit_market_api.Models.UserRefreshToken", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
 
                     b.ToTable("userRefreshToken", (string)null);
                 });
