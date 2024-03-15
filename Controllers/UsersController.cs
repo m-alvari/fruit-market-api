@@ -61,8 +61,7 @@ namespace fruit_market_api.Controllers
             user.Birthday = req.Birthday;
             user.Email = req.Email;
             user.Gender = req.Gender;
-            user.PhoneNumber = req.PhoneNumber;
-            user.Password = req.Password;
+
             user.ImageProfile = req.ImageProfile;
             await _context.SaveChangesAsync();
             return Ok(user);
@@ -80,6 +79,16 @@ namespace fruit_market_api.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<User>> GetUser(int id){
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if(user == null){
+                return NotFound();
+            }
+            user.Password = "";
+            return Ok(user);
         }
     }
 }
