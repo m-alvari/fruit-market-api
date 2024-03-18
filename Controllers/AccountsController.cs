@@ -80,7 +80,7 @@ namespace fruit_market_api.Controllers
             await _context.AddAsync(user);
 
             await _context.SaveChangesAsync();
-            user.Password = "";
+           
 
             var newJwtToken = _jWTManagerRepository.GenerateToken(
                            user.Id, user.PhoneNumber, user.Email, user.FirstName, user.LastName);
