@@ -3,6 +3,8 @@ using fruit_market_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace fruit_market_api.Controllers
 {
     [ApiController]
@@ -17,12 +19,28 @@ namespace fruit_market_api.Controllers
         }
 
         [HttpGet]
-        public async Task<Product[]> GetAll()
+        public async Task<Product[]> GetAll(
+            [FromQuery] string? q = null,
+            [FromQuery] int take = 8,
+            [FromQuery] int skip = 0,
+            [FromQuery] OrderBy orderBy = OrderBy.Asc
+            )
         {
-            var products = await _context.Products.ToArrayAsync();
+            var query = _context.Products.AsQueryable();
+
+            if (q != null && q != string.Empty)
+            {
+                query = query.Where(x => x.Name.Contains(q));
+            }
+
+            query = orderBy == OrderBy.Desc 
+            ? query.OrderByDescending(c => c.Name) 
+            : query.OrderBy(c => c.Name);
+
+            var products = await query.Skip(skip).Take(take).ToArrayAsync();
             return products;
         }
-
+     
         [HttpPost]
         public async Task<Product> CreateProduct(UpsertProductRequest req)
         {
@@ -65,10 +83,12 @@ namespace fruit_market_api.Controllers
 
         [HttpPut("{id:int}")]
 
-        public async Task<ActionResult<Product>> UpdateProduct(int id, UpsertProductRequest req){
+        public async Task<ActionResult<Product>> UpdateProduct(int id, UpsertProductRequest req)
+        {
             var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
-            if(product == null){
-            return NotFound();
+            if (product == null)
+            {
+                return NotFound();
             }
             product.Name = req.Name;
             product.Price = req.Price;
