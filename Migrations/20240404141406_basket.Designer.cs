@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using fruit_market_api.Db;
 
@@ -10,9 +11,11 @@ using fruit_market_api.Db;
 namespace fruit_market_api.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20240404141406_basket")]
+    partial class basket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -20,9 +23,7 @@ namespace fruit_market_api.Migrations
             modelBuilder.Entity("fruit_market_api.Models.Basket", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Count")
@@ -31,7 +32,10 @@ namespace fruit_market_api.Migrations
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserId", "ProductId");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId");
 
                     b.ToTable("basket", (string)null);
                 });
