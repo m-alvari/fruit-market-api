@@ -27,7 +27,7 @@ namespace fruit_market_api.Controllers
             query = query.OrderByDescending(c => c.DateCreation);
 
 
-            var baskets = await query.Where(x=>x.UserId == UserId).ToArrayAsync();
+            var baskets = await query.Where(x => x.UserId == UserId).ToArrayAsync();
             return baskets;
         }
 
@@ -66,18 +66,29 @@ namespace fruit_market_api.Controllers
         }
 
         [HttpDelete("{productId:int}")]
-        public async Task<ActionResult> DeleteBasket( int productId)
+        public async Task<ActionResult> DeleteBasket(int productId)
         {
             var basket = await _context.Baskets
             .FirstOrDefaultAsync(x => x.UserId == UserId && x.ProductId == productId);
 
-            if (basket == null )
+            if (basket == null)
             {
                 return NotFound();
             }
             _context.Baskets.Remove(basket);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("{productId:int}")]
+        public async Task<ActionResult<UpsertBasketRequest>> GetBasket(int productId)
+        {
+            var basket = await _context.Baskets.FirstOrDefaultAsync(x => x.UserId == UserId && x.ProductId == productId);
+            if (basket == null)
+            {
+                return new UpsertBasketRequest { Count = 0, ProductId = productId };
+            }
+            return Ok(basket);
         }
     }
 }

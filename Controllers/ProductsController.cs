@@ -33,14 +33,14 @@ namespace fruit_market_api.Controllers
                 query = query.Where(x => x.Name.Contains(q));
             }
 
-            query = orderBy == OrderBy.Desc 
-            ? query.OrderByDescending(c => c.Name) 
+            query = orderBy == OrderBy.Desc
+            ? query.OrderByDescending(c => c.Name)
             : query.OrderBy(c => c.Name);
 
             var products = await query.Skip(skip).Take(take).ToArrayAsync();
             return products;
         }
-     
+
         [HttpPost]
         public async Task<Product> CreateProduct(UpsertProductRequest req)
         {
@@ -65,6 +65,32 @@ namespace fruit_market_api.Controllers
                 return NotFound();
             }
             return Ok(product);
+        }
+
+        [HttpGet("images/{id:int}")]
+        public async Task<ActionResult> GetProductImage(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            // Extract content type and Base64 data
+            string[] parts = product.ImageUrl.Split(',');
+            if (parts.Length != 2)
+            {
+                // Handle invalid input
+                return BadRequest("Invalid Base64 string format.");
+            }
+
+            string contentType = parts[0].Replace("data:","").Replace(";base64",""); // "data:image/jpeg;base64"
+
+            string base64Data = parts[1];
+
+            // Convert Base64 string to byte array
+            byte[] imageBytes = Convert.FromBase64String(base64Data);
+
+            return File(imageBytes, contentType); // Content type extracted from Base64 string
         }
 
         [HttpDelete("{id:int}")]
