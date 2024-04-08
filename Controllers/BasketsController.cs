@@ -19,15 +19,24 @@ namespace fruit_market_api.Controllers
 
 
         [HttpGet]
-        public async Task<Basket[]> GetAll()
+        public async Task<BasketDetail[]> GetAll()
         {
-            var query = _context.Baskets.AsQueryable();
+            var query = from b in _context.Baskets
+                        where b.UserId == UserId
+                        join p in _context.Products on b.ProductId equals p.Id
+                        select new BasketDetail {
+                            Count=b.Count,
+                            Price = p.Price,
+                            DateCreation = b.DateCreation,
+                            ProductId = b.ProductId,
+                            Name = p.Name
+                        };
 
 
             query = query.OrderByDescending(c => c.DateCreation);
 
 
-            var baskets = await query.Where(x => x.UserId == UserId).ToArrayAsync();
+            var baskets = await query.ToArrayAsync();
             return baskets;
         }
 

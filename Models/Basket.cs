@@ -15,3 +15,17 @@ public record Basket
 
     public DateTime DateCreation { get; set; }
 }
+
+
+
+public record BasketDetail
+{
+
+    public int ProductId { get; set; }
+
+    public int Count { get; set; }
+
+    public DateTime DateCreation { get; set; }
+    public string Name { get; set; }
+    public float Price { get; set; }
+}
