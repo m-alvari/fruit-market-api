@@ -1,6 +1,8 @@
 using fruit_market_api.Db;
 using fruit_market_api.Models;
+using fruit_market_api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,20 +14,24 @@ namespace fruit_market_api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ShopContext _context;
+        private readonly ICurrentUserService _currentUserService;
 
-        public ProductsController(ShopContext context)
+        public ProductsController(ShopContext context, ICurrentUserService currentUserService)
         {
             _context = context;
+            _currentUserService = currentUserService;
         }
 
         [HttpGet]
-        public async Task<Product[]> GetAll(
+        public async Task<ProductDetail[]> GetAll(
             [FromQuery] string? q = null,
             [FromQuery] int take = 8,
             [FromQuery] int skip = 0,
             [FromQuery] OrderBy orderBy = OrderBy.Asc
             )
         {
+            var isLogin = _currentUserService.IsLogin();
+
             var query = _context.Products.AsQueryable();
 
             if (q != null && q != string.Empty)
@@ -37,8 +43,39 @@ namespace fruit_market_api.Controllers
             ? query.OrderByDescending(c => c.Name)
             : query.OrderBy(c => c.Name);
 
-            var products = await query.Skip(skip).Take(take).ToArrayAsync();
-            return products;
+            var pQuery = query.Skip(skip).Take(take);
+            if (isLogin)
+            {
+
+                var nQuery = from p in pQuery
+                             join f in _context.Favorites.Where(x => x.UserId == _currentUserService.User.UserId && x.IsDelete == false) on p.Id equals f.ProductId into qq
+                             from qz in qq.DefaultIfEmpty()
+                             select new ProductDetail
+                             {
+                                 Id = p.Id,
+                                 Name = p.Name,
+                                 Price = p.Price,
+                                 ImageUrl = p.ImageUrl,
+                                 IsFavorite = qz != null
+                             };
+                return await nQuery.ToArrayAsync();
+            }
+            else
+            {
+                var nQuery = from p in pQuery
+
+                             select new ProductDetail
+                             {
+                                 Id = p.Id,
+                                 Name = p.Name,
+                                 Price = p.Price,
+                                 ImageUrl = p.ImageUrl,
+                                 IsFavorite = false
+                             };
+                return await nQuery.ToArrayAsync();
+            }
+
+
         }
 
         [HttpPost]
@@ -83,7 +120,7 @@ namespace fruit_market_api.Controllers
                 return BadRequest("Invalid Base64 string format.");
             }
 
-            string contentType = parts[0].Replace("data:","").Replace(";base64",""); // "data:image/jpeg;base64"
+            string contentType = parts[0].Replace("data:", "").Replace(";base64", ""); // "data:image/jpeg;base64"
 
             string base64Data = parts[1];
 

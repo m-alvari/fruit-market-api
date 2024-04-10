@@ -85,8 +85,8 @@ public class JWTManagerRepository : IJWTManagerRepository
             // Extract claims from the token
 
             jwt = new JwtToken(
-                Convert.ToInt32(jwtToken.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Jti).First().Value),
-                 jwtToken.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Sub).First().Value,
+                Convert.ToInt32(jwtToken.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Name).First().Value),
+                jwtToken.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Sub).First().Value,
                 jwtToken.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Email).First().Value,
                 jwtToken.Claims.Where(x => x.Type == "firstName").First().Value,
                 jwtToken.Claims.Where(x => x.Type == "lastName").First().Value

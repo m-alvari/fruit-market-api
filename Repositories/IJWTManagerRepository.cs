@@ -7,5 +7,6 @@ namespace fruit_market_api.Repositories
     {
         LoginTokenResponse GenerateToken(int userId, string username, string email, string firstName, string lastName);
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
+        (JwtToken? Jet, bool HasError) Load(string tokenString);
     }
 }

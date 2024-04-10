@@ -15,8 +15,19 @@ namespace fruit_market_api.Db
         public DbSet<UserRefreshToken> RefreshTokens { get; set; }
 
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Favorite>(entity =>
+                     {
+                         entity.ToTable("favorite");
+                         entity.HasKey(x => new { x.UserId, x.ProductId });
+
+                         entity.Property(x => x.UserId).IsRequired();
+                         entity.Property(x => x.ProductId).IsRequired();
+                         entity.Property(x => x.IsDelete).IsRequired();
+                     });
+
             modelBuilder.Entity<Basket>(entity =>
             {
                 entity.ToTable("basket");

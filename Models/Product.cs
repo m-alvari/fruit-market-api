@@ -12,3 +12,5 @@ namespace fruit_market_api.Models;
         public float Price {get; set;}
         public string ImageUrl {get;set;}
     }
+
+ 

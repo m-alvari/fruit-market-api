@@ -1,5 +1,6 @@
 using fruit_market_api.Db;
 using fruit_market_api.Models;
+using fruit_market_api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +10,13 @@ namespace fruit_market_api.Controllers
     [Route("api/[controller]")]
     public class BasketsController : ControllerBase
     {
-        private readonly int UserId = 20;
         private readonly ShopContext _context;
+        private readonly ICurrentUserService _currentUserService;
 
-        public BasketsController(ShopContext context)
+        public BasketsController(ShopContext context, ICurrentUserService currentUserService)
         {
             _context = context;
+            _currentUserService = currentUserService;
         }
 
 
@@ -22,7 +24,7 @@ namespace fruit_market_api.Controllers
         public async Task<BasketDetail[]> GetAll()
         {
             var query = from b in _context.Baskets
-                        where b.UserId == UserId
+                        where b.UserId == _currentUserService.User.UserId
                         join p in _context.Products on b.ProductId equals p.Id
                         select new BasketDetail {
                             Count=b.Count,
@@ -45,7 +47,7 @@ namespace fruit_market_api.Controllers
         {
 
             var basket = await _context.Baskets
-                .FirstOrDefaultAsync(x => x.UserId == UserId && x.ProductId == req.ProductId);
+                .FirstOrDefaultAsync(x => x.UserId == _currentUserService.User.UserId && x.ProductId == req.ProductId);
 
             if (basket == null)
             {
@@ -54,7 +56,7 @@ namespace fruit_market_api.Controllers
                     ProductId = req.ProductId,
                     Count = req.Count,
                     DateCreation = DateTime.Now,
-                    UserId = UserId
+                    UserId = _currentUserService.User.UserId
                 };
                 await _context.AddAsync(basket);
             }
@@ -78,7 +80,7 @@ namespace fruit_market_api.Controllers
         public async Task<ActionResult> DeleteBasket(int productId)
         {
             var basket = await _context.Baskets
-            .FirstOrDefaultAsync(x => x.UserId == UserId && x.ProductId == productId);
+            .FirstOrDefaultAsync(x => x.UserId == _currentUserService.User.UserId && x.ProductId == productId);
 
             if (basket == null)
             {
@@ -92,7 +94,7 @@ namespace fruit_market_api.Controllers
         [HttpGet("{productId:int}")]
         public async Task<ActionResult<UpsertBasketRequest>> GetBasket(int productId)
         {
-            var basket = await _context.Baskets.FirstOrDefaultAsync(x => x.UserId == UserId && x.ProductId == productId);
+            var basket = await _context.Baskets.FirstOrDefaultAsync(x => x.UserId == _currentUserService.User.UserId && x.ProductId == productId);
             if (basket == null)
             {
                 return new UpsertBasketRequest { Count = 0, ProductId = productId };
