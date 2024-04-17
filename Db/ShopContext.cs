@@ -16,8 +16,32 @@ namespace fruit_market_api.Db
 
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetail { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OrderDetail>(entity =>
+            {
+                entity.ToTable("orderDetail");
+                entity.HasKey(c => new { c.OrderId, c.ProductId });
+                entity.Property(c => c.Count).IsRequired();
+                entity.Property(c => c.Price).IsRequired();
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ToTable("order");
+
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id)
+                    .IsRequired()
+                    .ValueGeneratedOnAdd();
+                entity.Property(x => x.UserId).IsRequired();
+                entity.Property(x => x.Id).IsRequired();
+                entity.Property(x => x.Price).IsRequired();
+                entity.Property(x => x.DataCreation).IsRequired();
+            });
+
             modelBuilder.Entity<Favorite>(entity =>
                      {
                          entity.ToTable("favorite");
