@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5CE1E33-1F87-4F97-AA48-C0194276A50B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitMarket.Api", "src\FruitMarket.Api\FruitMarket.Api.csproj", "{A228FBD4-C02F-416C-A496-D43579EDC099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitMarket.Common", "src\FruitMarket.Common\FruitMarket.Common.csproj", "{6E2BA87E-D418-46FE-95B8-9C010B96F82B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitMarket.Infrastructure", "src\FruitMarket.Infrastructure\FruitMarket.Infrastructure.csproj", "{EDF9640C-502D-4384-B5D9-F2359EDB483F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitMarket.Service", "src\FruitMarket.Service\FruitMarket.Service.csproj", "{8135021F-8AE5-41EE-B9E0-BF1E8620DC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitMarket.Domain", "src\FruitMarket.Domain\FruitMarket.Domain.csproj", "{49F4EA53-88F4-406D-BECA-F1D0E44A921F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A228FBD4-C02F-416C-A496-D43579EDC099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A228FBD4-C02F-416C-A496-D43579EDC099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A228FBD4-C02F-416C-A496-D43579EDC099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A228FBD4-C02F-416C-A496-D43579EDC099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E2BA87E-D418-46FE-95B8-9C010B96F82B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E2BA87E-D418-46FE-95B8-9C010B96F82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E2BA87E-D418-46FE-95B8-9C010B96F82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E2BA87E-D418-46FE-95B8-9C010B96F82B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDF9640C-502D-4384-B5D9-F2359EDB483F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF9640C-502D-4384-B5D9-F2359EDB483F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF9640C-502D-4384-B5D9-F2359EDB483F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF9640C-502D-4384-B5D9-F2359EDB483F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8135021F-8AE5-41EE-B9E0-BF1E8620DC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8135021F-8AE5-41EE-B9E0-BF1E8620DC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8135021F-8AE5-41EE-B9E0-BF1E8620DC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8135021F-8AE5-41EE-B9E0-BF1E8620DC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49F4EA53-88F4-406D-BECA-F1D0E44A921F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49F4EA53-88F4-406D-BECA-F1D0E44A921F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49F4EA53-88F4-406D-BECA-F1D0E44A921F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49F4EA53-88F4-406D-BECA-F1D0E44A921F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A228FBD4-C02F-416C-A496-D43579EDC099} = {B5CE1E33-1F87-4F97-AA48-C0194276A50B}
+		{6E2BA87E-D418-46FE-95B8-9C010B96F82B} = {B5CE1E33-1F87-4F97-AA48-C0194276A50B}
+		{EDF9640C-502D-4384-B5D9-F2359EDB483F} = {B5CE1E33-1F87-4F97-AA48-C0194276A50B}
+		{8135021F-8AE5-41EE-B9E0-BF1E8620DC4A} = {B5CE1E33-1F87-4F97-AA48-C0194276A50B}
+		{49F4EA53-88F4-406D-BECA-F1D0E44A921F} = {B5CE1E33-1F87-4F97-AA48-C0194276A50B}
+	EndGlobalSection
+EndGlobal
